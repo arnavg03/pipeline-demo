@@ -1,19 +1,19 @@
 # Weather Data Pipeline Project
 
-This project is an automated ETL pipeline that pulls daily temperature data from NOAA and turns it into GeoTIFF files that can be used in mapping software like QGIS. I built it to solve the problem of NOAA's longitude coordinates being on a 0-360 scale, which usually breaks most maps.
+This project is an automated ETL pipeline that pulls daily temperature data from NOAA and turns it into GeoTIFF files that can be used in mapping software like QGIS. I built it to solve the problem of NOAA's longitude coordinates being on a 0-360 scale, which breaks the standard map viz (clips continents off)
 
 ## What it does
 
-1. **Fetch:** A shell script uses `curl` to download the latest NetCDF file from NOAA's servers.
-2. **Transfer:** The Python script uses an SFTP tunnel to send that raw data into an AWS S3 bucket.
-3. **Process:** Python (using the `xarray` library) shifts the longitude so the map centers correctly and adds the `EPSG:4326` coordinate system so the file is spatially aware.
-4. **Upload:** It saves a GeoTIFF and a PNG plot back to a "clean" S3 bucket for analysis.
+1. **Fetch:** A shell script uses `curl` to download the latest NetCDF file from NOAA's servers (updates at ~9:30 am).
+2. **Transfer:** The Python script uses an SFTP (AWS Transfer Family) tunnel to send that raw data into an AWS S3 bucket.
+3. **Process:** Python (`xarray`) shifts the longitude so the map centers correctly and adds the `EPSG:4326` coordinate system so the file is spatially aware.
+4. **Upload:** It saves a GeoTIFF (`rioxarray`) and a PNG plot back to a "clean" S3 bucket for analysis.
 
 ### The Stack
 
-* **Cloud:** AWS (S3 for storage, EC2 for the server, IAM for security, and Transfer Family for the SFTP gateway).
-* **Language:** Python 3.9 (using `boto3`, `rasterio`, and `paramiko`).
-* **DevOps:** Docker (to make sure it runs the same everywhere) and a Linux Cron job to handle the daily scheduling.
+* **Cloud:** AWS (S3 for storage, EC2 compute for the server, IAM for roles and security, and Transfer Family for the SFTP gateway).
+* **Language:** Python 3.9 (`os`, `xarray`, `rioxarray`, `boto3`, `rioxarray`, `matplotlib`, `pathlib` and `paramiko`).
+* **DevOps:** Docker and a Linux Cron job to handle the daily scheduling.
 
 ### Problems Faced
 
