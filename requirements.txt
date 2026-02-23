@@ -1,6 +1,7 @@
 boto3
 xarray
-h5netcdf
+netCDF4
 matplotlib
 rioxarray
 rasterio
+paramiko

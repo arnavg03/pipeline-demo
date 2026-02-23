@@ -1,0 +1,11 @@
+sftp-key
+sftp-key.pub
+*.pem
+.env
+data/
+*.nc
+*.tif
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+.DS_Store
