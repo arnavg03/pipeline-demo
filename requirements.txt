@@ -1,0 +1,6 @@
+boto3
+xarray
+h5netcdf
+matplotlib
+rioxarray
+rasterio
