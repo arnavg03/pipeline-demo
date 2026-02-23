@@ -1,6 +1,9 @@
 #!/bin/bash
 echo "Starting Daily ETL Pipeline"
 
+#fix: mkdir for data folder
+mkdir -p data
+
 DATA_URL="https://downloads.psl.noaa.gov/Datasets/cpc_global_temp/tmax.2026.nc"
 LOCAL_FILE="data/raw_data.nc"
 
